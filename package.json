@@ -22,13 +22,14 @@
         "preview": "vite preview --host"
     },
     "dependencies": {
+        "@beeboat/axios": "^1.0.0",
         "axios": "^1.7.2"
     },
     "devDependencies": {
         "@element-plus/icons-vue": "^2.0.6",
         "@vitejs/plugin-vue": "^5.0.5",
-        "vite": "^5.3.3",
         "element-plus": "^2.7.6",
+        "vite": "^5.3.3",
         "vue": "^3.4.31"
     },
     "repository": {
