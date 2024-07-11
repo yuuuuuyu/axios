@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@beeboat/axios': ^1.0.0
   '@element-plus/icons-vue': ^2.0.6
   '@vitejs/plugin-vue': ^5.0.5
   axios: ^1.7.2
@@ -9,6 +10,7 @@ specifiers:
   vue: ^3.4.31
 
 dependencies:
+  '@beeboat/axios': 1.0.0
   axios: 1.7.2
 
 devDependencies:
@@ -40,6 +42,14 @@ packages:
       '@babel/helper-validator-identifier': 7.18.6
       to-fast-properties: 2.0.0
     dev: true
+
+  /@beeboat/axios/1.0.0:
+    resolution: {integrity: sha512-e5wrW10gzTr9DGUsXEXHB2gSFV+pKVktZQBE/CQ85zbZr4VY9tNgpjc967eppKLBooPyoRZ5GyJwf0WFDer56A==}
+    dependencies:
+      axios: 1.7.2
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /@ctrl/tinycolor/3.6.1:
     resolution: {integrity: sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==}

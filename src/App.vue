@@ -1,38 +1,30 @@
 <template>
   <div>
     <div class="wrap">
-      <h1 class="maintitle">Axios的升级替代品</h1>
-      <h2 class="subtitle">无任何副作用，仅仅为 Instance.get() 扩展缓存功能</h2>
+      <h1 class="title">基于Axios封装，为 Instance.get() 扩展了缓存功能</h1>
 
-      <div>
-        <a
-          href="https://github.com/cutting-mat/axios/blob/main/README_CN.md"
-          target="_blank"
-          class="myBtn"
-        >
-          <i class="el-icon-magic-stick"></i>
-          快速开始
-        </a>
-
-        <a
-          href="https://www.npmjs.com/package/axios"
-          target="_blank"
-          class="myBtn"
-        >
-          <i class="el-icon-reading"></i>
-          Axios 文档
-        </a>
+      <div class="link">
+        <a class="link-item" href="https://github.com/yuuuuuyu/axios"></a
+        ><a
+          class="link-item"
+          href="https://www.npmjs.com/package/@beeboat/axios"
+        ></a>
       </div>
-
-      <h3 class="channeltitle">演示</h3>
-      <el-button @click="testRequest(true)"> 请求(缓存开) </el-button>
-      <el-button @click="testRequest(false)"> 请求(缓存关) </el-button>
-      <el-button @click="testRequest('update')"> 请求(更新缓存) </el-button>
+      <el-button @click="testRequest(true)" type="primary">
+        请求(缓存开)
+      </el-button>
+      <el-button @click="testRequest(false)" type="danger">
+        请求(缓存关)
+      </el-button>
+      <el-button @click="testRequest('update')" type="success">
+        请求(更新缓存)
+      </el-button>
       <el-button @click="multiRequest()"> 并发3次请求(默认) </el-button>
       <el-button @click="multiRequest(false)"> 并发3次请求(缓存关) </el-button>
       <div class="log">
-        <el-button size="small" @click="clear()"> 清空日志 </el-button>
-        <div v-for="(item, index) in log" :key="index">
+        <el-button :icon="Delete" circle @click="clear()" />
+
+        <div v-for="(item, index) in log" :key="index" class="log-item">
           {{ item }}
         </div>
       </div>
@@ -42,7 +34,8 @@
 
 <script setup>
 import { ref } from "vue"
-import axios from "../lib/"
+import { Delete } from "@element-plus/icons-vue"
+import axios from "@beeboat/axios"
 
 // 创建请求实例
 const instance = axios.create({
@@ -77,46 +70,42 @@ const multiRequest = cacheOption => {
 <style scoped>
 .wrap {
   width: 1200px;
-  text-align: center;
+  margin: 50px auto;
 }
-.maintitle {
-  color: #000;
-  font-size: 2.5em;
-}
-.subtitle {
-  color: rgb(71, 101, 130);
+
+.title {
   font-size: 1.6em;
   font-weight: normal;
   margin-bottom: 20px;
 }
-.channeltitle {
-  font-size: 1.5em;
-  color: #000;
-  margin: 40px 0 20px;
-  font-weight: normal;
+.link {
+  display: flex;
+  height: 50px;
+  margin-bottom: 20px;
 }
-.myBtn {
-  display: inline-block;
-  border-radius: 6px;
-  padding: 0 24px;
-  line-height: 52px;
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: #f8f8f8;
-  background-color: #4abf8a;
-  border: 2px solid #3eaf7c;
-  transition: background-color 0.1s ease;
-  margin: 0 10px;
+.link .link-item {
+  width: 50px;
+  height: 100%;
+  margin-right: 20px;
 }
-
+.link .link-item:nth-child(1) {
+  background: url("./assets/icon/github-fill.png") center/contain no-repeat;
+}
+.link .link-item:nth-child(2) {
+  background: url("./assets/icon/npm.png") center/contain no-repeat;
+}
 .log {
   text-align: left;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 20px 0;
   min-height: 10em;
-  background: #dedede;
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 20px;
+}
+.log-item {
+  height: 40px;
+  line-height: 40px;
 }
 </style>
 
