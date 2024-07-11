@@ -1,6 +1,7 @@
 {
     "name": "@beeboat/axios",
-    "version": "0.0.1",
+    "version": "1.0.0",
+    "private": false,
     "files": [
         "dist",
         "LICENSE",
@@ -38,10 +39,14 @@
         "axios",
         "cache"
     ],
-    "author": "tower12229@foxmail.com",
+    "author": "于智勇｜15684187702@163.com",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/yuuuuuyu/axios/issues"
     },
-    "homepage": "https://github.com/yuuuuuyu/axios#readme"
+    "homepage": "https://github.com/yuuuuuyu/axios#readme",
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/"
+    }
 }

@@ -1,8 +1,7 @@
  # @beeboat/axios
+与 Axios 完全相同的 API，无任何副作用，为 `Instance.get()` 扩展缓存功能
 
 [![npm](https://img.shields.io/npm/v/@beeboat/axios.svg)](https://www.npmjs.com/package/@beeboat/axios) [![license](https://img.shields.io/github/license/yuuuuuyu/axios)]()
-
-与 Axios 完全相同的 API，无任何副作用，为 `Instance.get()` 扩展缓存功能
 
 ## 快速开始
 
