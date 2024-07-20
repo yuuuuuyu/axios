@@ -35,7 +35,8 @@
 <script setup>
 import { ref } from "vue"
 import { Delete } from "@element-plus/icons-vue"
-import axios from "@beeboat/axios"
+// import axios from "@beeboat/axios"
+import axios from "../lib"
 
 // 创建请求实例
 const instance = axios.create({
