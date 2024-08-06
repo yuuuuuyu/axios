@@ -51,10 +51,14 @@ const clear = () => {
 }
 const testRequest = cacheOption => {
   return instance
-    .get("http://localhost:9999/api/data", null, {
-      cache: cacheOption,
-      timestemp: true,
-    })
+    .get(
+      "http://localhost:9999/api/data",
+      { name: "123" },
+      {
+        cache: cacheOption,
+        timestamp: true,
+      }
+    )
     .then(res => {
       log.value.push(`${new Date().getTime()}: ${JSON.stringify(res.data)}`)
     })
@@ -64,7 +68,7 @@ const testRequest = cacheOption => {
 }
 const multiRequest = cacheOption => {
   for (let i = 0; i < 3; i++) {
-    tes.valuetRequest(cacheOption)
+    testRequest(cacheOption)
   }
 }
 </script>
