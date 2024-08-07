@@ -36,6 +36,7 @@
 import { ref } from "vue"
 import { Delete } from "@element-plus/icons-vue"
 // import axios from "@beeboat/axios"
+// import axios, { AxiosInstance } from "../lib"
 import axios from "../lib"
 
 // 创建请求实例
@@ -53,14 +54,16 @@ const testRequest = cacheOption => {
   return instance
     .get(
       "http://localhost:9999/api/data",
-      { name: "123" },
+      //   { params: { name: Math.random() } },
+      { params: { name: 11 } },
       {
         cache: cacheOption,
-        timestamp: true,
+        timestamp: false,
       }
     )
     .then(res => {
-      log.value.push(`${new Date().getTime()}: ${JSON.stringify(res.data)}`)
+      console.log(res, "[[[[[[[]]]]]]]")
+      log.value.push(`${new Date().getTime()}: ${JSON.stringify(res)}`)
     })
     .catch(err => {
       log.value.push(`${new Date().getTime()}: ${err.message || err}`)
@@ -71,6 +74,76 @@ const multiRequest = cacheOption => {
     testRequest(cacheOption)
   }
 }
+
+// setInterval(() => {
+//   testRequest(false)
+// }, 100)
+
+// 请求队列
+const pending = new Map()
+
+const generateReqKey = config => {
+  const { url, method, params, data } = config
+  return [url, method, JSON.stringify(params), JSON.stringify(data)].join("&")
+}
+
+const onRemoveReqSequence = config => {
+  const requestKey = generateReqKey(config)
+  console.log(pending.has(requestKey), "onRemoveReqSequence....")
+  if (pending.has(requestKey)) {
+    const cancel = pending.get(requestKey)
+    console.log(cancel, "cancel....")
+    cancel(`操作频繁已取消:${config.url}, ${JSON.stringify(config.params)}`)
+    pending.delete(requestKey)
+    console.log(pending, "deleted....")
+  }
+}
+
+const onAppendReqSequence = (config, cancel) => {
+  const requestKey = generateReqKey(config)
+  console.log(requestKey)
+  pending.set(requestKey, cancel)
+}
+instance.interceptors.request.use(config => {
+  onRemoveReqSequence(config) // 移除旧请求
+  const { CancelToken } = axios
+  config.cancelToken = new CancelToken(cancel => {
+    onAppendReqSequence(config, cancel) // 添加新请求
+  })
+  console.log(pending, "pending.....")
+
+  return config
+})
+instance.interceptors.response.use(
+  response => {
+    const { data, config } = response
+    onRemoveReqSequence(config)
+    try {
+      if (
+        config?.responseType == "blob" ||
+        config?.responseType == "arraybuffer"
+      ) {
+        return response
+      } else {
+        return data
+      }
+    } catch (error) {
+      return Promise.reject(response)
+    }
+  },
+  error => {
+    const $error = error
+    $error.isCancelRequest = axios.isCancel($error)
+    console.log(123123, $error.isCancelRequest)
+    if ($error.isCancelRequest) {
+      console.error($error.message)
+      return new Promise(() => {})
+    } else {
+      // 所有的响应异常 区分来源为取消请求/非取消请求
+      return Promise.reject($error)
+    }
+  }
+)
 </script>
 <style scoped>
 .wrap {
