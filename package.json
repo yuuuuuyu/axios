@@ -1,6 +1,6 @@
 {
     "name": "@beeboat/axios",
-    "version": "1.0.0",
+    "version": "1.0.5",
     "private": false,
     "files": [
         "dist",
@@ -8,12 +8,12 @@
         "package.json",
         "README.md"
     ],
-    "main": "./dist/main.umd.js",
-    "module": "./dist/main.es.js",
+    "main": "./dist/axios.umd.js",
+    "module": "./dist/axios.es.js",
     "exports": {
         ".": {
-            "import": "./dist/main.es.js",
-            "require": "./dist/main.umd.js"
+            "import": "./dist/axios.es.js",
+            "require": "./dist/axios.umd.js"
         }
     },
     "scripts": {
@@ -22,7 +22,6 @@
         "preview": "vite preview --host"
     },
     "dependencies": {
-        "@beeboat/axios": "^1.0.0",
         "axios": "^1.7.2"
     },
     "devDependencies": {
@@ -38,7 +37,8 @@
     },
     "keywords": [
         "axios",
-        "cache"
+        "cache",
+        "repeat"
     ],
     "author": "于智勇｜15684187702@163.com",
     "license": "MIT",

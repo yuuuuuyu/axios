@@ -19,8 +19,11 @@
       <el-button @click="testRequest('update')" type="success">
         请求(更新缓存)
       </el-button>
-      <el-button @click="multiRequest()"> 并发3次请求(默认) </el-button>
+      <el-button @click="multiRequest(true)"> 并发3次请求(默认) </el-button>
       <el-button @click="multiRequest(false)"> 并发3次请求(缓存关) </el-button>
+      <el-button @click="post(1)"> post请求 </el-button>
+      <el-button @click="post(4)"> 并发post请求 </el-button>
+
       <div class="log">
         <el-button :icon="Delete" circle @click="clear()" />
 
@@ -36,8 +39,8 @@
 import { ref } from "vue"
 import { Delete } from "@element-plus/icons-vue"
 // import axios from "@beeboat/axios"
+// import axios, { AxiosInstance } from "../lib"
 import axios from "../lib"
-
 // 创建请求实例
 const instance = axios.create({
   headers: {
@@ -51,22 +54,62 @@ const clear = () => {
 }
 const testRequest = cacheOption => {
   return instance
-    .get("http://localhost:9999/api/data", null, {
-      cache: cacheOption,
-      timestemp: true,
-    })
+    .get(
+      "http://localhost:9999/api/data",
+      { id: 1121 },
+      {
+        cache: cacheOption,
+      }
+    )
     .then(res => {
       log.value.push(`${new Date().getTime()}: ${JSON.stringify(res.data)}`)
     })
     .catch(err => {
-      log.value.push(`${new Date().getTime()}: ${err.message || err}`)
+      log.value.push(`${new Date().getTime()}-000: ${err.message || err}`)
     })
 }
 const multiRequest = cacheOption => {
   for (let i = 0; i < 3; i++) {
-    tes.valuetRequest(cacheOption)
+    testRequest(cacheOption)
   }
 }
+
+const post = times => {
+  for (let i = 0; i < times; i++) {
+    instance
+      .post("http://localhost:9999/api/data2", {
+        key: 123,
+      })
+      .then(res => {
+        log.value.push(`${new Date().getTime()}: ${JSON.stringify(res.data)}`)
+      })
+      .catch(err => {
+        log.value.push(`${new Date().getTime()}-000: ${err.message || err}`)
+      })
+    // instance
+    //   .put("http://localhost:9999/api/data3/1", {
+    //     key: 123,
+    //   })
+    //   .then(res => {
+    //     // console.log(res)
+    //     log.value.push(`${new Date().getTime()}: ${JSON.stringify(res.data)}`)
+    //   })
+    //   .catch(err => {
+    //     // console.log(err)
+    //     log.value.push(`${new Date().getTime()}-000: ${err.message || err}`)
+    //   })
+  }
+}
+
+instance.interceptors.request.use(
+  config => {
+    config.headers["appId"] = "123123123"
+    return config
+  },
+  error => {
+    return Promise.reject(error)
+  }
+)
 </script>
 <style scoped>
 .wrap {
@@ -107,6 +150,7 @@ const multiRequest = cacheOption => {
 .log-item {
   height: 40px;
   line-height: 40px;
+  overflow: hidden;
 }
 </style>
 

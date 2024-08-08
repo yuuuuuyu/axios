@@ -8,7 +8,7 @@ export default defineConfig({
         lib: {
             entry: path.resolve(__dirname, "lib/index.js"),
             name: "index",
-            fileName: (format) => `main.${format}.js`,
+            fileName: (format) => `axios.${format}.js`,
         },
         rollupOptions: {
             external: ["axios"],
