@@ -21,7 +21,7 @@
       </el-button>
       <el-button @click="multiRequest(true)"> 并发3次请求(默认) </el-button>
       <el-button @click="multiRequest(false)"> 并发3次请求(缓存关) </el-button>
-      <el-button @click="post()"> post请求 </el-button>
+      <el-button @click="post(1)"> post请求 </el-button>
       <el-button @click="post(4)"> 并发post请求 </el-button>
 
       <div class="log">
@@ -56,11 +56,9 @@ const testRequest = cacheOption => {
   return instance
     .get(
       "http://localhost:9999/api/data",
-      { params: { name: 111 } },
-      //   { name: 112 },
+      { id: 1121 },
       {
         cache: cacheOption,
-        timestamp: false,
       }
     )
     .then(res => {
@@ -78,29 +76,40 @@ const multiRequest = cacheOption => {
 
 const post = times => {
   for (let i = 0; i < times; i++) {
-    console.log(i)
-    // instance
-    //   .post("http://localhost:9999/api/data2", {
-    //     key: 123,
-    //   })
-    //   .then(res => {
-    //     console.log(res)
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //   })
     instance
-      .put("http://localhost:9999/api/data3/1", {
+      .post("http://localhost:9999/api/data2", {
         key: 123,
       })
       .then(res => {
-        console.log(res)
+        log.value.push(`${new Date().getTime()}: ${JSON.stringify(res.data)}`)
       })
       .catch(err => {
-        console.log(err)
+        log.value.push(`${new Date().getTime()}-000: ${err.message || err}`)
       })
+    // instance
+    //   .put("http://localhost:9999/api/data3/1", {
+    //     key: 123,
+    //   })
+    //   .then(res => {
+    //     // console.log(res)
+    //     log.value.push(`${new Date().getTime()}: ${JSON.stringify(res.data)}`)
+    //   })
+    //   .catch(err => {
+    //     // console.log(err)
+    //     log.value.push(`${new Date().getTime()}-000: ${err.message || err}`)
+    //   })
   }
 }
+
+instance.interceptors.request.use(
+  config => {
+    config.headers["appId"] = "123123123"
+    return config
+  },
+  error => {
+    return Promise.reject(error)
+  }
+)
 </script>
 <style scoped>
 .wrap {
