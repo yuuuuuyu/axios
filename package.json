@@ -1,6 +1,6 @@
 {
     "name": "@beeboat/axios",
-    "version": "1.0.6",
+    "version": "1.0.9",
     "private": false,
     "files": [
         "dist",
@@ -50,6 +50,6 @@
     "homepage": "https://github.com/yuuuuuyu/axios#readme",
     "publishConfig": {
         "access": "public",
-        "registry": "https://registry.npmjs.org/"
+        "registry": "http://localhost:4873/"
     }
 }

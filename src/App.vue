@@ -79,11 +79,13 @@ const post = times => {
     instance
       .post("http://localhost:9999/api/data2", {
         key: 123,
+        data: { name: 1111 },
       })
       .then(res => {
         log.value.push(`${new Date().getTime()}: ${JSON.stringify(res.data)}`)
       })
       .catch(err => {
+        console.log(err)
         log.value.push(`${new Date().getTime()}-000: ${err.message || err}`)
       })
     // instance
