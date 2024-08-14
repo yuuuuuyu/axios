@@ -50,6 +50,6 @@
     "homepage": "https://github.com/yuuuuuyu/axios#readme",
     "publishConfig": {
         "access": "public",
-        "registry": "http://localhost:4873/"
+        "registry": "https://nexus.hive-df.com/repository/bt-npm-hosted/"
     }
 }
