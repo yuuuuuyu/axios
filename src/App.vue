@@ -56,7 +56,7 @@ const testRequest = cacheOption => {
   return instance
     .get(
       "http://localhost:9999/api/data",
-      { id: 1121 },
+      { id: 1121, responseType: "blob" },
       {
         cache: cacheOption,
       }
